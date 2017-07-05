@@ -1,0 +1,11 @@
+name = NASA Exoplanet Explorer
+description = "Adds a block for viewing Exoplanet info using NASA's public API."
+package = NASA
+version = 1.1.0
+core = 7.x
+files[] = exoplanets.module
+files[] = exoplanets.html
+stylesheets[all][] = css/exoplanets-tables.css
+
+; NEW LINE
+configure = admin/config/exoplanets

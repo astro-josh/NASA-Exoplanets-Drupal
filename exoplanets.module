@@ -1,0 +1,132 @@
+<?php
+
+/**
+* @file
+* Adds a block displaying NASA's exoplanet data.
+* created by Joshua Alexander
+*/
+
+/**
+ * Implements hook_block_info().
+ */
+function exoplanets_block_info() {
+  $blocks['exoplanets'] = array(
+    // The name that will appear in the block list.
+    'info' => t('Exoplanets'),
+    // Default setting.
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function exoplanets_menu() {
+  $items = array();
+
+  $items['admin/config/exoplanets'] = array(
+    'title' => 'Exoplanet Data',
+    'description' => 'Configuration for Exoplanets module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('exoplanets_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback: Exoplanets settings
+ *
+ * @see exoplanets_menu()
+ */
+function exoplanets_form($form, &$form_state) {
+  $form['exoplanets_theme'] = array(
+    '#type' => 'select',
+    '#title' => t('Select Theme'),
+    '#default_value' => variable_get('exoplanets_theme', 'Smoothness'),
+    '#options' => array(
+         'https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css' => t('Smoothness'),
+         'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' => t('Base'),
+         'https://code.jquery.com/ui/1.12.1/themes/black-tie/jquery-ui.css' => t('Black Tie'),
+         'https://code.jquery.com/ui/1.12.1/themes/blitzer/jquery-ui.css' => t('Blitzer'),
+         'https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css' => t('Cupertino'),
+         'https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css' => t('Dark Hive'),
+         'https://code.jquery.com/ui/1.12.1/themes/dot-luv/jquery-ui.css' => t('Dot Luv'),
+         'https://code.jquery.com/ui/1.12.1/themes/eggplant/jquery-ui.css' => t('Eggplant'),
+         'https://code.jquery.com/ui/1.12.1/themes/excite-bike/jquery-ui.css' => t('Excite Bike'),
+         'https://code.jquery.com/ui/1.12.1/themes/flick/jquery-ui.css' => t('Flick'),
+         'https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css' => t('Hot Sneaks'),
+         'https://code.jquery.com/ui/1.12.1/themes/humanity/jquery-ui.css' => t('Humanity'),
+         'https://code.jquery.com/ui/1.12.1/themes/le-frog/jquery-ui.css' => t('Le Frog'),
+         'https://code.jquery.com/ui/1.12.1/themes/mint-choc/jquery-ui.css' => t('Mint Choc'),
+         'https://code.jquery.com/ui/1.12.1/themes/overcast/jquery-ui.css' => t('Overcast'),
+         'https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css' => t('Pepper Grinder'),
+         'https://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css' => t('Redmond'),
+         'https://code.jquery.com/ui/1.12.1/themes/south-street/jquery-ui.css' => t('South Street'),
+         'https://code.jquery.com/ui/1.12.1/themes/start/jquery-ui.css' => t('Start'),
+         'https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css' => t('Sunny'),
+         'https://code.jquery.com/ui/1.12.1/themes/swanky-purse/jquery-ui.css' => t('Swanky Purse'),
+         'https://code.jquery.com/ui/1.12.1/themes/trontastic/jquery-ui.css' => t('Trontastic'),
+         'https://code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css' => t('UI Darkness'),
+         'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' => t('UI Lightness'),
+         'https://code.jquery.com/ui/1.12.1/themes/vader/jquery-ui.css' => t('Vader')),
+       '#default_value' => variable_get('exoplanets_theme', 'Smoothness'),
+       '#description' => t('Select a theme to use for the table.'),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
+
+/**
+ * Custom content function.
+ *
+ * @return
+ *   Returns the html for the block.
+ */
+function exoplanets_contents() {
+		try {
+    		$data = '<html><head><meta charset="UTF-8">
+				<title>Test</title>
+				<!-- The jQuery library is a prerequisite for all jqSuite products -->
+				<script type="text/ecmascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				<!-- This is the Javascript file of jqGrid -->
+				<script type="text/ecmascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/jquery.jqGrid.min.js"></script>
+				<!-- This is the localization file of the grid controlling messages, labels, etc. -->
+				<script type="text/ecmascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js"></script>
+				<!-- A link to a jQuery UI theme, more than 22 built-in and many more custom -->
+				<link rel="stylesheet" type="text/css" media="screen" href="' . variable_get('exoplanets_theme', 'Smoothness') . '"/>
+				<!-- The link to the CSS that the grid needs -->
+				<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css" />
+				</head>' . file_get_contents(drupal_get_path('module', 'exoplanets') . '/exoplanets.html');
+		} catch (Exception $ex) {
+    		echo 'Failed to generate markup: ' . $ex;
+		}
+		return $data;
+}
+
+
+
+/**
+ * Implements hook_block_view().
+ * 
+ * Prepares the contents of the block.
+ */
+function exoplanets_block_view($delta = '') {
+	global $theme;
+  switch ($delta) {
+    case 'exoplanets':
+        $block['subject'] = t('Exoplanets');
+        if (user_access('access content')) {
+            $block['content'] = array(
+			'#markup' => exoplanets_contents());
+        }
+  }
+  return $block;
+}
+
+?>

@@ -1,0 +1,28 @@
+.ui-pg-table tbody {
+    border: none;
+}
+
+#jqGridPager_center td {
+    border: none;
+    text-align: center;
+}
+
+#jqGridPager_center tr {
+    border: none;
+    text-align: center;
+}
+
+#jqGridPager_left {
+    border: none;
+    text-align: center;
+}
+
+#jqGridPager_center {
+    border: none;
+    text-align: center;
+}
+
+#jqGridPager_right {
+    border: none;
+    text-align: center;
+}
