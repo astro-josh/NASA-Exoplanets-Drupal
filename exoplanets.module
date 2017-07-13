@@ -110,7 +110,6 @@ function exoplanets_contents() {
 }
 
 
-
 /**
  * Implements hook_block_view().
  * 
